@@ -62,12 +62,13 @@ function buildMetadata(sample) {
         }],
       title: 'Weekly cleaning frequency',
       xaxis: {zeroline:false, showticklabels:false,
-                showgrid: false, range: [-1, 1]},
+                showgrid: false, range: [-1, 1], constrain: 'domain'},
       yaxis: {zeroline:false, showticklabels:false,
-                showgrid: false, range: [-1, 1]}
+                showgrid: false, range: [-1, 1], scaleanchor: 'x'}
     };
   
     Plotly.newPlot('gauge', data, layout);
+    
     
     });
 
@@ -114,7 +115,7 @@ function buildCharts(sample) {
       hoverinfo: otu_labels_top10,
       type: 'pie'
     }];    
-    Plotly.newPlot('pie', pie_data);
+    Plotly.newPlot('pie', pie_data, {responsive: true});
 
     var bubble_data = [{
       y: sample_values,
@@ -133,7 +134,7 @@ function buildCharts(sample) {
       text: otu_labels
     }];    
 
-    Plotly.newPlot('bubble', bubble_data);
+    Plotly.newPlot('bubble', bubble_data, {responsive: true});
 });
 }
 
@@ -162,6 +163,28 @@ function optionChanged(newSample) {
   buildCharts(newSample);
   buildMetadata(newSample);
 }
+
+function optionNext(newSample) {
+  // Fetch new data each time a new sample is selected
+  buildCharts(newSample);
+  buildMetadata(newSample);
+}
+
+function myFunction() {
+  var x = document.getElementById("welcome");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+$('.display-4').quickfit();
+$(document).ready(function () {
+  $('.display-4').quickfit();
+  $('h3').quickfit();
+
+});
 
 // Initialize the dashboard
 init();
